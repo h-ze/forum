@@ -9,6 +9,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class managerTest {
     //测试类
+
+    //----------------------
     private ApplicationContext ac = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     private ModuleService ms= (ModuleService) ac.getBean("moduleServiceImpl");
     /*private ManagerService mgr = (ManagerService) ac.getBean("managerServiceImpl");
