@@ -1,0 +1,84 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>wangEditor demo</title>
+
+</head>
+<body style="background-color: #b52b27;">
+
+
+<form id="ffArticle" method="post" enctype="multipart/form-data">
+    <br>
+    <div style="margin-top: 35px;margin-left: 75px">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公告标题：<input class="easyui-textbox" data-options="label:'文章标题:'" name="noticeName"/> <br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公告作者：<input id="cc" name="articleByName" value="管理员"><br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公告状态：<input name="noticeStatus" class="easyui-switchbutton" data-options="onText:'置顶',offText:'正常'"><br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公告内容：<br><br>
+        <input id="editValue" name="noticeIntroduce" type="text" hidden="hidden">
+        <div id="editor" style="width: 1000px;margin-left: 20px">
+        </div>
+
+
+        <br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a id="btn" onclick="addArticle()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">创建公告</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a id="btnClear" onclick="clearArticle()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">重置</a>
+
+    </div>
+</form>
+
+<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+<script type="text/javascript" src="../js/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor;
+    var editor = new E('#editor');
+    // 或者 var editor = new E( document.getElementById('editor') )
+    editor.customConfig.uploadImgServer = '../Article/upload.do';  // 上传图片到服务器
+    editor.customConfig.uploadFileName = 'files'; //上传图片的名称
+    editor.create();
+    function addArticle() {
+        var text=editor.txt.html();
+        document.getElementById("editValue").value=text;
+        $("#ffArticle").form("submit",{
+            url:"/forum/notice/add.do",
+            success:function(res){
+                if(res == "success"){
+                    $.messager.show({
+                        title:"提示",
+                        msg:"上传成功！",
+                        timeout:3000,
+                        showType:"slider",
+                    });
+                    $("#ffArticle").form('reset');
+                    editor.txt.html('<p><br></p>');
+                }else{
+                    $.messager.show({
+                        title:"提示",
+                        msg:"上传失败！",
+                        timeout:3000,
+                        showType:"slider",
+                    });
+                }
+            }
+        });
+    }
+
+
+    $(function () {
+        /*$('#cc').combobox({
+            url:'${pageContext.request.contextPath}/Article/findName.do',
+            valueField:'masterId',
+            textField:'masterName'
+        });*/
+
+
+    });
+
+    function clearArticle(){
+        $("#ffArticle").form('clear');
+        editor.txt.html('<p><br></p>');
+    }
+</script>
+</body>
+</html>

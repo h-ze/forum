@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.forum.dao.ArticleDAO">
+    
+    <resultMap type="com.hz.forum.entity.Article" id="ArticleResultMap">
+    <id property="articleId" column="article_id"></id>
+        <result property="articleName" column="article_name"></result>
+        <result property="articleAuthor" column="article_author"></result>
+        <result property="articleDate" column="article_date"></result>
+
+    </resultMap>
+    <select id="selectAll" resultMap="ArticleResultMap">
+        select * from forum_article <if test="dim!=null">where article_name like #{dim}</if>
+        limit #{begin},#{showSize}
+    </select>
+
+    <select id="countArticle" resultType="int">
+        select count(*) from forum_article
+        <if test="dim!=null">where article_name like #{dim}</if>
+    </select>
+
+
+    <select id="select" resultMap="ArticleResultMap">
+        select * from forum_article where article_id = #{articleId}
+    </select>
+
+    <update id="update">
+        update forum_module set article_name =#{articleName} where article_id = #{articleId}
+    </update>
+
+    <insert id="insert">
+        insert into forum_article values (#{articleId},#{articleName},#{articleAuthor},#{articleDate})
+    </insert>
+
+    <delete id="delete">
+        delete from forum_article where article_id = #{articleId}
+    </delete>
+
+</mapper>

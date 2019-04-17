@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript" src="../js/datagrid-detailview.js"></script>
+<script type="text/javascript">
+    $(function(){
+
+        $('#dg1234').datagrid({
+            remoteSort:false,
+            singleSelect:true,
+            nowrap:false,
+            fitColumns:true,
+            url:'/forum/article/findAll.do',
+            columns:[[
+                {field:'articleId',title:'文章编号',width:80},
+                {field:'articleName',title:'文章名称',width:80},
+                {field:'articleAuthor',title:'文章作者',width:80},
+                //{field:'userStatus',title:'用户状态',width:80},
+                {field:'articleDate',title:'文章日期',width:80},
+
+                {field:"operation",title:"操作",width:40,formatter:function(value,row,index){
+                    //$("#del").linkbutton({});
+                    return "<a name='zz1' class='easyui-linkbutton' data-options=\"height:20,iconCls:'icon-edit'\" onClick='updateArticle()'>修改文章信息</a> <a name='zz1' class='easyui-linkbutton' data-options=\"height:20,iconCls:'icon-edit'\" onClick='deleteArticle()'>删除</a>";
+                }},
+            ]],
+            view:detailview,
+            detailFormatter: function(rowIndex, rowData) {
+                return '<table><tr>' +
+                    '<td rowspan=2 style="border:0"><img src="http://192.168.239.131:8888/' + rowData.masterPhoto + '" style="height:50px;"></td>' +
+                    '<td style="border:0">' +
+                    '</td>' +
+                    '</tr></table>';
+            },
+
+
+            onLoadSuccess:function(){
+                /* console.log(11);
+                 $(".btn").linkbutton({}); */
+                //$.parser.parse();
+                $("a[name='zz1']").linkbutton({});
+
+            },
+            pagination:true,
+            pageList : [ 5, 10, 15, 20, 25 ],
+            pageSize : 5,
+            toolbar : "#articletb",
+            fitColumns: true,
+            singleSelect:true,
+
+        });
+
+
+
+        $("#aritcleaddMaster1").linkbutton({
+            onClick:function(){
+                $("#dialog_article").dialog({
+                    width:450,
+                    height:200,
+                    title:"新增文章",
+                    toolbar:[{
+                        iconCls:"icon-help",
+                        text:"help"
+                    }],
+                    href:"/forum/main/add_article.html",
+                    modal:true,
+                    buttons:[{
+                        iconCls:"icon-edit",
+                        text:"保存",
+                        handler:function(){
+                            //提交
+                            $("#addArticle").form("submit",{
+                                url:"/forum/article/add.do",
+                                onSubmit:function(){
+                                    return $("#ff3").form("validate");
+                                },
+                                success:function(res){
+                                    if(res == "success"){
+                                        $.messager.alert('提示','添加成功！');
+                                        $("#dialog_article").dialog("close");
+                                        $("#dg1234").datagrid({
+                                            url:"/forum/article/findAll.do",
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    },{
+                        iconCls:"icon-cancel",
+                        text:"取消",
+                        handler:function(){
+                            $.messager.show({
+                                title:"我的消息",
+                                msg:"对话框将要消失了",
+                                timeout:5000,
+                                showType:"slider",
+                            });
+
+                            $("#dialog_article").dialog("close");
+                        }
+                    }],
+                });
+
+
+
+
+
+            }
+        });
+
+
+        /*$("#addMaster1").linkbutton({
+
+
+            onClick:function(){
+                $("#dialog_master").dialog({
+                    width:450,
+                    height:200,
+                    title:"新增用户",
+                    toolbar:[{
+                        iconCls:"icon-help",
+                        text:"help"
+                    }],
+                    href:"/forum/main/form5.jsp",
+                    modal:true,
+                    buttons:[{
+                        iconCls:"icon-edit",
+                        text:"保存",
+                        handler:function(){
+                            //提交
+                            $("#ff_master").form("submit",{
+                                url:"/cmfz-admin/Master/import.do",
+                                success:function(res){
+                                    if(res == "success"){
+                                        $.messager.alert('提示','添加成功！');
+                                        $("#dialog_master").dialog("close");
+                                        $("#dg123").datagrid({
+                                            url:"/cmfz-admin/Master/query.do",
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    },{
+                        iconCls:"icon-cancel",
+                        text:"取消",
+                        handler:function(){
+                            $.messager.show({
+                                title:"我的消息",
+                                msg:"对话框将要消失了",
+                                timeout:5000,
+                                showType:"slider",
+                            });
+
+                            $("#dialog_master").dialog("close");
+                        }
+                    }],
+                });
+            }
+        });
+*/
+        $("#exportMaster1").linkbutton({
+            onClick:function () {
+                window.location.href="/cmfz-admin/Master/download.do"
+            }
+        });
+
+
+
+
+    });
+
+    function updateArticle(){
+        var rowData = $("#dg1234").datagrid("getSelected");
+        alert(rowData.articleName);
+        $("#dialog_article").dialog({
+            width:450,
+            height:160,
+            title:"修改文章信息",
+            href:"/forum/main/update_article.html",
+            modal:true,
+            buttons:[{
+                iconCls:"icon-edit",
+                text:"保存",
+                handler:function(){
+                    //提交
+                    $("#updateArticles").form("submit",{
+                        url:"/forum/article/modify.do?articleId="+rowData.articleId,
+                        onSubmit:function(){
+                            return $("#updateArticles").form("validate");
+                        },
+                        success:function(res){
+                            if(res == "success"){
+                                $.messager.alert('提示','修改成功！');
+                                $("#dialog_article").dialog("close");
+                                $("#dg1234").datagrid({
+                                    url:"/forum/article/findAll.do",
+                                });
+                            }
+                        }
+                    });
+
+
+                }
+            },{
+                iconCls:"icon-cancel",
+                text:"取消",
+                handler:function(){
+                    $.messager.show({
+                        title:"我的消息",
+                        msg:"对话框将要消失了",
+                        timeout:5000,
+                        showType:"slider",
+                    });
+
+                    $("#dialog_article").dialog("close");
+                }
+            }],
+            onLoad:function(){
+                $("#updateArticles").form("load",rowData); //在加载表单时将行数据加载到表单元素中
+            }
+        });
+    }
+
+
+    function deleteArticle(){
+        var rowData = $("#dg1234").datagrid("getSelected");
+        alert(rowData.articleName);
+        $("#dialog_article").dialog({
+            width:450,
+            height:160,
+            title:"删除文章信息",
+            href:"/forum/main/delete_article.html",
+            modal:true,
+            buttons:[{
+                iconCls:"icon-edit",
+                text:"确定",
+                handler:function(){
+                    //提交
+                    $("#deleteArticles").form("submit",{
+
+                        url:"/forum/article/remove.do?articleId="+rowData.articleId,
+                        onSubmit:function(){
+                            return $("#deleteArticles").form("validate");
+                        },
+                        success:function(res){
+                            if(res == "success"){
+                                $.messager.alert('提示','删除成功！');
+                                $("#dialog_article").dialog("close");
+                                $("#dg1234").datagrid({
+                                    url:"/forum/article/findAll.do",
+                                });
+                            }
+                        }
+                    });
+
+
+                }
+            },{
+                iconCls:"icon-cancel",
+                text:"取消",
+                handler:function(){
+                    $.messager.show({
+                        title:"我的消息",
+                        msg:"对话框将要消失了",
+                        timeout:5000,
+                        showType:"slider",
+                    });
+
+                    $("#dialog_article").dialog("close");
+                }
+            }],
+            onLoad:function(){
+                $("#deleteArticles").form("load",rowData); //在加载表单时将行数据加载到表单元素中
+            }
+        });
+    }
+
+
+    function qq(value,name){
+        if(name=="masterName"){
+            $('#dg1234').datagrid({
+                url:'/cmfz-admin/Master/query.do?masterName='+value,
+
+            });
+        }
+        if(name=="id"){
+            $('#dg1234').datagrid({
+                url:'/cmfz-admin/Master/query.do?id='+value,
+
+            });
+        }
+    }
+
+</script>
+
+<table id="dg1234"></table>
+<div id="articletb">
+    <a id="aritcleaddMaster1" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'新增文章'"></a>
+    <a id="editUser" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true,text:'帮助'"></a>
+    <input id="ss" class="easyui-searchbox" style="width:300px"
+           data-options="searcher:qq,prompt:'请输入要搜索的关键字',menu:'#mm'"></input>
+
+    <div id="mm" style="width:120px">
+        <div data-options="name:'masterName',iconCls:'icon-ok'">姓名</div>
+    </div>
+
+</div>
+
+<div id="dialog_article"></div>
+</html>

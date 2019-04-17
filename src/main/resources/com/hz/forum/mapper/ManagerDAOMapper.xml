@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.forum.dao.ManagerDAO">
+    
+    <resultMap type="com.hz.forum.entity.Manager" id="ManagerResultMap">
+    <id property="forumId" column="forum_id"></id>
+        <result property="forumName" column="forum_name"></result>
+        <result property="forumPassword" column="forum_password"></result>
+        <result property="forumSalt" column="forum_salt"></result>
+        <result property="forumStatus" column="forum_status"></result>
+    </resultMap>
+    <select id="select" resultMap="ManagerResultMap">
+        select * from forum_manager where forum_name= #{forumName}
+    </select>
+
+    <select id="findByManagername" resultMap="ManagerResultMap">
+        select * from forum_manager where forum_name =#{forumName}
+    </select>
+
+    <update id="updateManager">
+        update forum_manager set forum_password =#{forumPassword} where forum_id =#{forumId}
+    </update>
+    
+    <select id="findRolesByManager" resultType="SysRole">
+        select id id,role_name roleName,role_tag roleTag from sys_role where id in (SELECT role_id from sys_user_role where user_id =(SELECT forum_id from forum_manager where forum_name =#{forumName}))
+    </select>
+
+    <select id="findPermissionsByUsername" resultType="SysPermission">
+        SELECT
+        id id,
+        resource_name resourceName,
+        resource_tag  resourceTag,
+        resource_url  resourceUrl,
+        permission_tag permissionTag
+        from sys_permission where id in(select permission_id from sys_role_permission where role_id in((SELECT role_id from sys_user_role where user_id =(SELECT forum_id from forum_manager where forum_name =#{forumName}))))
+    </select>
+
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.forum.dao.MenuDAO">
+    
+    <resultMap type="com.hz.forum.entity.Menu" id="MenuResultMap">
+    <id property="menuId" column="menu_id"></id>
+        <result property="menuName" column="menu_name"></result>
+        <result property="menuType" column="menu_type"></result>
+        <result property="menuUrl" column="menu_url"></result>
+        <result property="menuLevel" column="menu_level"/>
+        <result property="menuParentId" column="menu_parent_id"/>
+    </resultMap>
+    <select id="selectAll" resultMap="MenuResultMap">
+        select * from forum_menu where menu_parent_id =#{menuParentId}
+    </select>
+
+    <!--<select id="findByManagername" resultMap="ManagerResultMap">
+        select * from forum_manager where forum_name =#{forumName}
+    </select>-->
+    
+    <!--<select id="findRolesByManager" resultType="SysRole">
+        select id id,role_name roleName,role_tag roleTag from sys_role where id in (SELECT role_id from sys_user_role where user_id =(SELECT mgr_id from manager where mgr_name =#{mgrName}))
+    </select>-->
+
+    <!--<select id="findPermissionsByUsername" resultType="SysPermission">
+        SELECT
+        id id,
+        resource_name resourceName,
+        resource_tag  resourceTag,
+        resource_url  resourceUrl,
+        permission_tag permissionTag
+        from sys_permission where id in(select permission_id from sys_role_permission where role_id in((SELECT role_id from sys_user_role where user_id =(SELECT mgr_id from manager where mgr_name =#{mgrName}))))
+    </select>-->
+
+
+</mapper>

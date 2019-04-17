@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.forum.dao.NoticeDAO">
+    
+    <resultMap type="com.hz.forum.entity.Notice" id="NoticeResultMap">
+    <id property="noticeId" column="notice_id"></id>
+        <result property="noticeName" column="notice_name"></result>
+        <result property="noticeStatus" column="notice_status"></result>
+        <result property="noticeIntroduce" column="notice_introduce"></result>
+        <result property="noticeDate" column="notice_date"></result>
+    </resultMap>
+    <select id="selectAll" resultMap="NoticeResultMap">
+        select * from forum_notice <if test="dim!=null">where notice_name like #{dim}</if>
+        limit #{begin},#{showSize}
+    </select>
+
+    <select id="countArticle" resultType="int">
+        select count(*) from forum_notice
+        <if test="dim!=null">where notice_name like #{dim}</if>
+    </select>
+
+
+    <select id="select" resultMap="NoticeResultMap">
+        select * from forum_notice where notice_id = #{noticeId}
+    </select>
+
+    <update id="update">
+        update forum_notice set notice_name =#{noticeName},notice_status =#{noticeStatus} where notice_id = #{noticeId}
+    </update>
+
+    <insert id="insert">
+        insert into forum_notice values (#{noticeId},#{noticeName},#{noticeStatus},#{noticeIntroduce},#{noticeDate})
+    </insert>
+
+    <delete id="delete">
+        delete from forum_notice where notice_id = #{noticeId}
+    </delete>
+
+</mapper>

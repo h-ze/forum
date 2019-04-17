@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.forum.dao.UserDAO">
+    
+    <resultMap type="com.hz.forum.entity.User" id="UserResultMap">
+    <id property="userId" column="user_id"></id>
+        <result property="userName" column="user_name"></result>
+        <result property="userLevel" column="user_level"></result>
+        <result property="userStatus" column="user_status"></result>
+        <result property="userIntroduce" column="user_introduce"></result>
+    </resultMap>
+
+    <!--<select id="selectAll" resultMap="UserResultMap">
+        select * from forum_user
+    </select>-->
+
+
+    <select id="selectAll" resultMap="UserResultMap">
+        select * from forum_user <if test="dim!=null">where user_name like #{dim}</if>
+        limit #{begin},#{showSize}
+    </select>
+
+    <select id="countMaster" resultType="int">
+        select count(*) from forum_user
+        <if test="dim!=null">where forum_name like #{dim}</if>
+    </select>
+
+    <select id="select" resultMap="UserResultMap">
+        select * from forum_user where user_id = #{userId}
+    </select>
+
+    <update id="update">
+        update forum_user set user_status =#{userStatus} where user_id =#{userId}
+    </update>
+    <!--<select id="Select" resultMap="ManagerResultMap">
+        select * from forum_manager where forum_name= #{forumName}
+    </select>
+
+    <select id="findByManagername" resultMap="ManagerResultMap">
+        select * from forum_manager where forum_name =#{forumName}
+    </select>-->
+    
+    <!--<select id="findRolesByManager" resultType="SysRole">
+        select id id,role_name roleName,role_tag roleTag from sys_role where id in (SELECT role_id from sys_user_role where user_id =(SELECT mgr_id from manager where mgr_name =#{mgrName}))
+    </select>-->
+
+    <!--<select id="findPermissionsByUsername" resultType="SysPermission">
+        SELECT
+        id id,
+        resource_name resourceName,
+        resource_tag  resourceTag,
+        resource_url  resourceUrl,
+        permission_tag permissionTag
+        from sys_permission where id in(select permission_id from sys_role_permission where role_id in((SELECT role_id from sys_user_role where user_id =(SELECT mgr_id from manager where mgr_name =#{mgrName}))))
+    </select>-->
+
+    <insert id="insert">
+        insert into forum_user values (#{userId},#{userName},#{userLevel},#{userStatus},#{userIntroduce})
+    </insert>
+
+    <delete id="delete">
+        delete from forum_user where user_id=#{userId}
+    </delete>
+    <!--<select id="downloadAll" resultMap="MasterResultMap">
+        select * from master
+    </select>
+
+    <update id="update">
+        update master set master_name=#{masterName},master_photo=#{masterPhoto},master_summary=#{masterSummary} where master_id=#{masterId}
+    </update>
+
+    <delete id="delete">
+        delete from master where master_id=#{masterId}
+    </delete>-->
+    <select id="downloadAll" resultMap="UserResultMap">
+        select * from forum_user
+    </select>
+</mapper>

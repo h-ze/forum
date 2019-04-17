@@ -1,0 +1,73 @@
+@charset "utf-8";
+/* 提示弹出开始 */
+html,body{ height:100%}
+html{overflow-x:hidden;}
+body{overflow-x:hidden;}
+#cover{position:absolute;top:0;left:0;z-index:100;visibility:hidden;background:#666;opacity:0.5;filter:alpha(opacity=50);}
+.shadow{position:absolute;top:0;left:0;z-index:200;visibility:hidden; width:601px; height:364px;}
+/* 提示弹出结束 */
+/* 右边内容页面 */
+.form1 p{height:28px;background:url(../images/thp_bg.gif) repeat-x;line-height:28px;font-weight:bold;}
+.datetext{width:82px;height:22px;background:url(../images/datetext.gif) no-repeat;color:#525252;border:none;line-height:22px; cursor:pointer;text-align:center; padding-right:20px; border:1px solid #D4E1F2;}
+.form1 img{ vertical-align:middle;}
+.menu_cx{width:55px;height:23px;background:url(../images/menu_cx.gif) no-repeat;border:none;}
+.table1{ border-collapse:collapse;}
+.table1 th{height:30px;text-align:center; vertical-align:middle;background:url(../images/table_th.gif) repeat-x;border:1px solid #d6d7d9; border-collapse:collapse;border-bottom:none;}
+.table1 td{text-align:center;border-bottom:1px solid #dedede; border-collapse:collapse;padding:5px 0px;}
+.table1 td a{color:#485b6c;}
+.border_right{border:1px solid #dedede;}
+.mainbox{height:400px;_height:400px; overflow:auto; overflow-x:hidden; clear:both;}
+.footer{height:32px;line-height:32px;width:100%;line-height:32px;background:url(../images/fybg.gif) repeat-x;vertical-align:middle;}
+.footer img{ vertical-align:middle;}
+.footer a{color:#525252;}
+.footer a:hover{color:#395A7B;}
+#header a{color:#395A7B;}
+#header a:hover{text-decoration:underline;}
+.cxnrtj{ padding-left:10px; }
+.cxnrtj a{ color:#000}
+.cxnrtja a{ color:#000}
+.cxnrtja a:hover{ color:#395A7B}
+.cxnrtja{-padding-top:2px; overflow:hidden}
+/*  
+*@Description: 工单提取弹出层
+*@Author:bubble
+*@Update:2012-02-21
+*/
+html,body{ height:100%}
+.mt10{margin-top:10px;}
+#cover,#cover2{position:absolute;top:0;left:0;z-index:100;visibility:hidden;background:#666;opacity:0.5;filter:alpha(opacity=50);}
+.gdtq_shadow{position:absolute;top:0;left:0;z-index:200;visibility:hidden; padding:0 12px; line-height:23px; width:163px; height:110px; background:url(images/gdtq.gif) no-repeat;}
+.gdtq_shadow h2{height:24px; font:bold 12px/24px Tahoma, Geneva, sans-serif; color:#15428B;}
+.gdtq_cont{width:141px; height:44px; margin:0 auto; padding-left:35px; background:url(images/wh.gif) no-repeat 0px 8px; line-height:44px;}
+.sure,.qx{width:75px; height:23px; line-height:20px; background:url(images/btn1.gif) no-repeat; text-align:center; border:0 none;}
+.close{width:15px; height:15px; background:url(images/gb.gif) no-repeat; cursor:pointer; margin-top:5px;}
+
+.gdtq_shadow2{position:absolute;top:0;left:0;z-index:200;visibility:hidden; padding:0 12px; line-height:23px; width:218px; height:107px; background:url(images/alert1bg.gif) no-repeat;}
+.gdtq_shadow2 h2{height:24px; font:bold 12px/24px Tahoma, Geneva, sans-serif; color:#15428B;}
+.gdtq_cont2{width:185px; height:40px; margin:0 auto; padding-left:40px; background:url(images/cwts.gif) no-repeat 0 8px; line-height:44px;}
+.center{text-align:center;}
+
+.pop_small{position:absolute;top:0;left:0; z-index:200;visibility:hidden; line-height:45px; width:195px; height:45px; background:#C3DAF9;  border:1px solid #6593CF; padding:0px 15px 10px; text-align:center;}
+.pop_small2{position:absolute;top:0;left:0;z-index:200;visibility:hidden;  width:210px; height:50px; background:#C3DAF9; border:1px solid #6593CF; padding:0px 15px 10px;}
+.pop_small2 h2{font:bold 12px/30px Tahoma, Geneva, sans-serif;}
+
+/*  
+*@Description: 工单处理
+*@Author:bubble
+*@Update:2012-02-21
+*/
+.adddisplay{text-align:left;}
+.adddisplay strong{margin:0 8px 0 5px; font:bold 12px/22px Tahoma, Geneva, sans-serif;}
+.adddisplay p{ line-height:18px; padding-left:10px}
+.gdtq_shadow1{position:absolute;top:0;left:0;z-index:200;visibility:hidden; padding:0 12px; line-height:23px; width:376px; height:170px; background:url(images/alert2bg.gif) no-repeat;}
+.gdtq_shadow1 h2{height:24px; font:bold 12px/24px Tahoma, Geneva, sans-serif; color:#15428B;}
+.gdtq_cont1{width:365px; height:90px; margin:0 auto; padding:10px;}
+.gdtq_cont1 table td{line-height:24px;}
+.gdtq_cont1 table th{line-height:24px; font-weight:normal;}
+.gdtq_shadow1 img{ vertical-align:middle; margin-right:4px;}
+/*  
+*@Description: 工单处理
+*@Author:bubble
+*@Update:2012-02-21
+*/
+.

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.forum.dao.LogDAO">
+    
+    <resultMap type="com.hz.forum.entity.Log" id="LogResultMap">
+    <id property="logId" column="log_id"/>
+        <result property="logUsername" column="log_username"/>
+        <result property="logDate" column="log_date"/>
+        <result property="logResource" column="log_resource"/>
+        <result property="logAction" column="log_action"/>
+        <result property="logMessage" column="log_message"/>
+        <result property="logResult" column="log_result"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="LogResultMap">
+        select * from forum_log limit #{begin},#{showSize}
+    </select>
+
+    <select id="countLog" resultType="int">
+        select count(*) from forum_log
+    </select>
+
+    <insert id="insert">
+        insert into forum_log
+        values(#{logId},#{logUsername},#{logDate},#{logResource},#{logAction},#{logMessage},#{logResult})
+    </insert>
+
+
+</mapper>
